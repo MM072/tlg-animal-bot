@@ -1,6 +1,7 @@
 const { response } = require("express");
 const { axiosInstance } = require("./axios");
 const fetch = require("node-fetch");
+const token = process.env.token
 
 function sendMessage(messageObj, messageText){
     return axiosInstance.get("sendMessage", {
@@ -26,45 +27,11 @@ async function handleMessage(messageObj) {
     }else{
         console.log(messageText)
         let data;
-        // if(messageObj.photo){
-        //     console.log(messageObj)
-        //     let photos = []
-            // for (let i = 0; i < messageObj.photo.length; i++) {
-            //     const res = await fetch(`https://api.telegram.org/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/getFile?file_id=${messageObj.photo[i].file_id}`)
-            //     const d = await res.json()
-            //     console.log(d)
-            //     const result = d.result.file_path
-
-            //     photos.push(`"image":{"url":https://api.telegram.org/file/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/${result}},`)
-            //     console.log(photos)
-            // }
-
-        //     let lastElement = photos[photos.length -1];
-        //     lastElement = lastElement.slice(0, -1);
-        //     lastElement = lastElement.replace("\'", "");
-        //     photos.pop()
-        //     photos.push(lastElement)
-        //     let img = new Map([photos])
-        //     let json = JSON.stringify(Object.fromEntries(img));
-        //     console.log(json)
-
-        //     data = {
-        //         username: `${messageObj.from.first_name} ${messageObj.from.last_name||""}`,
-        //         content: messageObj.caption || " ",
-        //         embeds: [JSON.parse(json)]
-        //     }
-            
-        // }else{
-        //     data = {
-        //         username: `${messageObj.from.first_name} ${messageObj.from.last_name||""}`,
-        //         content: messageText || " ",
-        //     }
-        // }
 
         if(messageObj.photo){
             for (let i = 0; i < messageObj.photo.length; i++) {
                 if(messageObj.photo.length >= 2){
-                    const res = await fetch(`https://api.telegram.org/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/getFile?file_id=${messageObj.photo[messageObj.photo.length - 1].file_id}`)
+                    const res = await fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${messageObj.photo[messageObj.photo.length - 1].file_id}`)
                     const d = await res.json()
                     const result = d.result.file_path
 
@@ -73,7 +40,7 @@ async function handleMessage(messageObj) {
                         embeds:[{
                             "title": messageText || messageObj.caption || " ",
                             "image":{
-                                "url": `https://api.telegram.org/file/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/${result}`
+                                "url": `https://api.telegram.org/file/bot${token}/${result}`
                             }
                         }]
                     }
@@ -85,7 +52,7 @@ async function handleMessage(messageObj) {
                 
                     break
                 }
-                const res = await fetch(`https://api.telegram.org/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/getFile?file_id=${messageObj.photo[i].file_id}`)
+                const res = await fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${messageObj.photo[i].file_id}`)
                 const d = await res.json()
                 const result = d.result.file_path
 
@@ -95,7 +62,7 @@ async function handleMessage(messageObj) {
                     embeds:[{
                         "title": messageText || messageObj.caption || " ",
                         "image":{
-                            "url": `https://api.telegram.org/file/bot6899370687:AAEfaiUrcDvHKiCG2uNlfL6qzzSoTmNsb3k/${result}`
+                            "url": `https://api.telegram.org/file/bot${token}/${result}`
                         }
                     }]
                 }
