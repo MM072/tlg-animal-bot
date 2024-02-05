@@ -18,8 +18,12 @@ app.listen(PORT, function(err) {
     console.log("Server listening to PORT ", PORT)
 })
 
-await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${url}`, {
-    method: "POST",
-    headers: {"content-type": "application/json"},
-    body: JSON.stringify(data)
-})
+async function setWebhook(){
+    await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${url}`, {
+        method: "POST",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify(data)
+    })
+}
+
+setWebhook()
