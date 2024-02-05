@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 4040;
 const { handler } = require("./controller")
 const fetch = require("node-fetch")
 const url = "https://animal-bot-tlg.onrender.com"
+const token = process.env.token
 
 const app = express()
 app.use(express.json())
