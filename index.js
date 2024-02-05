@@ -12,6 +12,7 @@ app.post("*", async (req, res) => {
     res.send(await handler(req));
 });
 app.get("*", async (req, res) => {
+    res.send("Hello")
     res.send(await handler(req))
 })
 
