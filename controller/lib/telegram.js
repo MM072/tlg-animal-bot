@@ -1,7 +1,9 @@
 const { response } = require("express");
 const { axiosInstance } = require("./axios");
 const fetch = require("node-fetch");
+// require("dotenv").config()
 const token = process.env.token
+console.log(token)
 
 function sendMessage(messageObj, messageText){
     return axiosInstance.get("sendMessage", {
@@ -11,7 +13,6 @@ function sendMessage(messageObj, messageText){
 }
 
 async function handleMessage(messageObj) {
-    console.log(messageObj)
     const messageText = messageObj.text || " ";
 
     if(messageText.charAt(0) == "/") {
@@ -29,11 +30,13 @@ async function handleMessage(messageObj) {
         console.log(messageText)
         let data;
 
+        console.log(messageObj)
         if(messageObj.photo){
             for (let i = 0; i < messageObj.photo.length; i++) {
                 if(messageObj.photo.length >= 2){
                     const res = await fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${messageObj.photo[messageObj.photo.length - 1].file_id}`)
                     const d = await res.json()
+                    console.log(d)
                     const result = d.result.file_path
 
                     data = {
