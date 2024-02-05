@@ -19,11 +19,7 @@ app.listen(PORT, function(err) {
 })
 
 async function setWebhook(){
-    await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${url}`, {
-        method: "POST",
-        headers: {"content-type": "application/json"},
-        body: JSON.stringify(data)
-    })
+    await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${url}`)
 }
 
 setWebhook()
