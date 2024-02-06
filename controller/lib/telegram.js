@@ -3,7 +3,6 @@ const { axiosInstance } = require("./axios");
 const fetch = require("node-fetch");
 // require("dotenv").config()
 const token = process.env.token
-console.log(token)
 
 function sendMessage(messageObj, messageText){
     return axiosInstance.get("sendMessage", {
